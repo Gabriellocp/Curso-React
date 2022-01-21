@@ -9,6 +9,15 @@
   "author": "Gabriel Orlando Campista Petrucci",
   "license": "ISC",
   "devDependencies": {
-    "git-commit-msg-linter": "^4.0.7"
+    "@types/node": "^17.0.10",
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "eslint": "^8.7.0",
+    "eslint-config-standard-with-typescript": "^11.0.1",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "git-commit-msg-linter": "^4.0.7",
+    "typescript": "^4.5.5"
   }
 }
