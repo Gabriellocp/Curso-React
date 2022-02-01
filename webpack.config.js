@@ -5,7 +5,7 @@ module.exports = {
     entry: './src/main/index.tsx',
     output: {
         path: path.join(__dirname, 'public/js'),
-        piblicPath: '/public/js',
+        publicPath: '/public/js',
         filename: 'bundle.js'
     },
     resolve: {
@@ -34,15 +34,19 @@ module.exports = {
             {
                 loader: 'sass-loader'
             }
-            
+
             ],
             exclude: /node_modules/
         }
-    ]
+        ]
     },
     devServer: {
-        contentBase: './public',
-        writeToDisk: true,
+        devMiddleware: {
+            writeToDisk: true
+        },
+        static: {
+            directory: './public'
+        },
         historyApiFallback: true,
     },
     externals: {
