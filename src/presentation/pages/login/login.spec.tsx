@@ -7,6 +7,11 @@ describe('Login Component', () => {
         const errorWrap = getByTestId('error-wrap')
         expect(errorWrap.childElementCount).toBe(0)
     });
+    test('Enter button not rendered at screen\'s creation', () => {
+        const { getByTestId } = render(<Login></Login>)
+        const button = getByTestId('submit') as HTMLButtonElement
+        expect(button.disabled).toBe(true)
+    });
 
 });
 
