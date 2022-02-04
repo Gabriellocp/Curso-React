@@ -14,14 +14,18 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
         email: '',
         password: '',
         mainError: '',
-        emailError: 'Campo obrigatório',
+        emailError: '',
         passwordError: 'Campo obrigatório'
 
 
     })
 
     useEffect(() => {
-        validation.validate('email', state.email)
+        setState({
+            ...state,
+            emailError: validation.validate('email', state.email)
+        })
+        console.log(` Teste ${state.emailError}`)
     }, [state.email])
     useEffect(() => {
         validation.validate('password', state.password)
