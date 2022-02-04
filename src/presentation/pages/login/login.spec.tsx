@@ -32,7 +32,7 @@ describe('Login Component', () => {
         expect(emailStatus.title).toBe(validationSpy.errorMessage)
         expect(emailStatus.textContent).toBe('👌')
         const passwordStatus = sut.getByTestId('passwordStatus')
-        expect(passwordStatus.title).toBe('Campo obrigatório')
+        expect(passwordStatus.title).toBe(validationSpy.errorMessage)
         expect(passwordStatus.textContent).toBe('👌')
 
     });
