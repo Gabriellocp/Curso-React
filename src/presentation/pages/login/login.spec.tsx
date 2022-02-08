@@ -1,12 +1,8 @@
 import React from 'react'
 import { render, RenderResult, fireEvent, cleanup } from '@testing-library/react'
 import Login from './login'
-import { Validation } from '@/presentation/protocols/validation'
-import { ValidationSpy } from '@/presentation/test'
+import { ValidationSpy, AuthenticationSpy } from '@/presentation/test'
 import faker from 'faker'
-import { Authentication, AuthenticationParams } from '@/domain/usecases'
-import { AccountModel } from '@/domain/models'
-import { mockAccountModel } from '@/domain/test'
 type SutTypes = {
     sut: RenderResult
     validationSpy: ValidationSpy
@@ -31,15 +27,7 @@ const makeSut = (params?: SutParams): SutTypes => {
     }
 }
 
-class AuthenticationSpy implements Authentication {
-    account = mockAccountModel()
-    params: AuthenticationParams
-    async auth(params: AuthenticationParams): Promise<AccountModel> {
-        this.params = params
-        return this.account
-    }
 
-}
 
 describe('Login Component', () => {
     afterEach(cleanup)
