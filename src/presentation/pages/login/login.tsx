@@ -25,7 +25,6 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
             ...state,
             emailError: validation.validate('email', state.email)
         })
-        console.log(` Teste ${state.emailError}`)
     }, [state.email])
     useEffect(() => {
         setState(oldState => ({
