@@ -1,5 +1,7 @@
 import { Validation } from "@/presentation/protocols/validation"
 import { FieldValidation } from "@/validation/protocols/field-validation"
+import { FieldValidationSpy } from "../test/mock-field-validation"
+
 
 export class ValidationComposite implements Validation {
     constructor(private readonly validators: FieldValidation[]) { }
