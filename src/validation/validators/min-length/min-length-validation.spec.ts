@@ -15,6 +15,3 @@ describe('MinLengthValidation', () => {
         expect(error).toBeFalsy()
     })
 })
-
-
-

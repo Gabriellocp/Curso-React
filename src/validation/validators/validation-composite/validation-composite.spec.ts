@@ -20,7 +20,6 @@ const makeSut = (field: string): SutTypes => {
     }
 }
 
-
 describe('ValidationComposite', () => {
     test('Should return error if any validation fails', () => {
         const field = faker.database.column()
@@ -41,5 +40,3 @@ describe('ValidationComposite', () => {
         expect(error).toBeFalsy()
     })
 })
-
-

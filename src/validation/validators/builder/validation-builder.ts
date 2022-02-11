@@ -27,6 +27,7 @@ export class ValidationBuilder {
         this.validations.push(new MinLengthValidation(this.fieldName, length))
         return this
     }
+
     build(): FieldValidation[] {
         return this.validations
     }
