@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { DefinePlugin } = require('webpack')
@@ -12,7 +13,7 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', 'scss'],
         alias: {
-            '@': path.join(__dirname, 'src'),
+            '@': path.join(__dirname, 'src')
         }
     },
     module: {
@@ -48,16 +49,16 @@ module.exports = {
         static: {
             directory: './public'
         },
-        historyApiFallback: true,
+        historyApiFallback: true
     },
     externals: {
         react: 'React',
-        'react-dom': 'ReactDOM',
+        'react-dom': 'ReactDOM'
     },
     plugins: [
         new CleanWebpackPlugin(),
         new DefinePlugin({
-            'process.env.API_URL': 'http://fordevs.herokuapp.com/api/'
+            'process.env.API_URL': JSON.stringify('http://fordevs.herokuapp.com/api/')
         })
     ]
 
