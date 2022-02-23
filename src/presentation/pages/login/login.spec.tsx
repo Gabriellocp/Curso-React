@@ -42,17 +42,11 @@ const makeSut = (params?: SutParams): SutTypes => {
 
 const simulateValidSubmit = async (sut: RenderResult, email = faker.internet.email(), password = faker.internet.password()): Promise<void> => {
 
-    populateEmailField(sut, email)
+    Helper.populateField(sut, 'email', email)
     populatePassField(sut, password)
     const form = sut.getByTestId('form')
     fireEvent.submit(form)
     await waitFor(() => form)
-}
-
-const populateEmailField = (sut: RenderResult, email = faker.internet.email()): void => {
-    const emailInput = sut.getByTestId('email')
-    fireEvent.input(emailInput, { target: { value: email } })
-
 }
 
 const populatePassField = (sut: RenderResult, password = faker.internet.password()): void => {
@@ -87,7 +81,7 @@ describe('Login Component', () => {
     test('Should call Validation with correct value', () => {
         const email = faker.internet.email()
         const { sut, validationSpy } = makeSut()
-        populateEmailField(sut, email)
+        Helper.populateField(sut, 'email', email)
         expect(validationSpy.fieldName).toBe('email')
         expect(validationSpy.fieldValue).toBe(email)
 
@@ -105,7 +99,7 @@ describe('Login Component', () => {
     test('Should show email error if validation fails', () => {
         const validationError = faker.random.words()
         const { sut } = makeSut({ validationError })
-        populateEmailField(sut)
+        Helper.populateField(sut, 'email')
         Helper.testStatusForFields(sut, 'email', validationError)
     })
 
@@ -119,7 +113,7 @@ describe('Login Component', () => {
 
     test('Should show valid email state if Validation succeeds', () => {
         const { sut } = makeSut()
-        populateEmailField(sut)
+        Helper.populateField(sut, 'email')
         Helper.testStatusForFields(sut, 'email')
     })
     test('Should show valid password state if Validation succeeds', () => {
@@ -130,8 +124,8 @@ describe('Login Component', () => {
     test('Should enable submit button if form is valid', () => {
         const { sut } = makeSut()
 
-        populateEmailField(sut)
-        populatePassField(sut)
+        Helper.populateField(sut, 'email')
+        Helper.populateField(sut, 'password')
         Helper.testButtonIsDisabled(sut, 'submit', false)
     })
     test('Should show loading spinner on submit', async () => {
@@ -161,7 +155,7 @@ describe('Login Component', () => {
     test('Should not call Authentication if form is invalid', () => {
         const validationError = faker.random.words()
         const { sut, authenticationSpy } = makeSut({ validationError })
-        populateEmailField(sut)
+        Helper.populateField(sut, 'email')
         fireEvent.submit(sut.getByTestId('form'))
         expect(authenticationSpy.callsCount).toBe(0)
     })
