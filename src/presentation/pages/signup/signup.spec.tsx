@@ -30,11 +30,6 @@ const simulateValidSubmit = async (sut: RenderResult, name = faker.name.findName
     await waitFor(() => form)
 }
 
-const testElementExists = (sut: RenderResult, name: string): void => {
-    const el = sut.getByTestId(name)
-    expect(el).toBeTruthy()
-}
-
 describe('Signup Component', () => {
     afterEach(cleanup)
     test('Should start with initial components disabled', () => {
@@ -104,6 +99,6 @@ describe('Signup Component', () => {
     test('Should show loading spinner on submit', async () => {
         const { sut } = makeSut()
         await simulateValidSubmit(sut)
-        testElementExists(sut, 'spinner')
+        Helper.testElementExists(sut, 'spinner')
     })
 })

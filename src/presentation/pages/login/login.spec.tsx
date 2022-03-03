@@ -55,11 +55,6 @@ const populatePassField = (sut: RenderResult, password = faker.internet.password
 
 }
 
-const testElementExists = (sut: RenderResult, name: string): void => {
-    const el = sut.getByTestId(name)
-    expect(el).toBeTruthy()
-}
-
 const testElementText = (sut: RenderResult, name: string, text: string): void => {
     const el = sut.getByTestId(name)
     expect(el.textContent).toBe(text)
@@ -131,7 +126,7 @@ describe('Login Component', () => {
     test('Should show loading spinner on submit', async () => {
         const { sut } = makeSut()
         await simulateValidSubmit(sut)
-        testElementExists(sut, 'spinner')
+        Helper.testElementExists(sut, 'spinner')
     })
 
     test('Should call Authentication with correct values', async () => {
