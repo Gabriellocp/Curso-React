@@ -3,14 +3,16 @@ import Styles from './signup-styles.scss'
 import { Footer, Input, LoginHeader, FormStatus } from '@/presentation/components'
 import Context from '@/presentation/contexts/form/form-context'
 import { Validation } from '@/presentation/protocols/validation'
-import { AddAccount } from '@/domain/usecases'
+import { AddAccount, SaveAccessToken } from '@/domain/usecases'
+import { useHistory } from 'react-router-dom'
 type Props = {
     validation: Validation
     addAccount: AddAccount
+    saveAccessToken: SaveAccessToken
 }
 
-const Signup: React.FC<Props> = ({ validation, addAccount }) => {
-
+const Signup: React.FC<Props> = ({ validation, addAccount, saveAccessToken }) => {
+    const history = useHistory()
     const [state, setState] = useState({
         isLoading: false,
         mainError: '',
@@ -41,12 +43,14 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
                 return
             }
             setState({ ...state, isLoading: true })
-            await addAccount.add({
+            const account = await addAccount.add({
                 name: state.name,
                 email: state.email,
                 password: state.password,
                 passwordConfirmation: state.passwordConfirmation
             })
+            await saveAccessToken.save(account.accessToken)
+            history.replace('/')
         } catch (error) {
             setState({
                 ...state,
@@ -65,7 +69,7 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
                     <Input type="text" name="name" placeholder='Digite seu nome'></Input>
                     <Input type="email" name="email" placeholder='Digite seu e-mail'></Input>
                     <Input type="password" name="password" placeholder='Digite sua senha'></Input>
-                    <Input type="passwordConfirmation" name="passwordConfirmation" placeholder='Confirme sua senha'></Input>
+                    <Input type="password" name="passwordConfirmation" placeholder='Confirme sua senha'></Input>
                     <button data-testid="submit" disabled={!!state.nameError || !!state.emailError || !!state.passwordError || !!state.passwordConfirmationError} className={Styles.submit} type="submit">Entrar</button>
                     <span className={Styles.link}>Voltar para Login</span>
                     <FormStatus ></FormStatus>
