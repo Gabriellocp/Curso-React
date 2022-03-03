@@ -55,11 +55,6 @@ const populatePassField = (sut: RenderResult, password = faker.internet.password
 
 }
 
-const testElementText = (sut: RenderResult, name: string, text: string): void => {
-    const el = sut.getByTestId(name)
-    expect(el.textContent).toBe(text)
-}
-
 describe('Login Component', () => {
     afterEach(cleanup)
 
@@ -160,7 +155,7 @@ describe('Login Component', () => {
         const error = new InvalidCredentialsError()
         jest.spyOn(authenticationSpy, 'auth').mockReturnValueOnce(Promise.reject(error))
         await simulateValidSubmit(sut)
-        testElementText(sut, 'mainError', error.message)
+        Helper.testElementText(sut, 'mainError', error.message)
         Helper.testChildCount(sut, 'error-wrap', 1)
 
     })
@@ -178,7 +173,7 @@ describe('Login Component', () => {
         const error = new InvalidCredentialsError()
         jest.spyOn(saveAccessTokenMock, 'save').mockReturnValueOnce(Promise.reject(error))
         await simulateValidSubmit(sut)
-        testElementText(sut, 'mainError', error.message)
+        Helper.testElementText(sut, 'mainError', error.message)
         Helper.testChildCount(sut, 'error-wrap', 1)
 
     })
