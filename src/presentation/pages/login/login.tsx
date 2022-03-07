@@ -5,6 +5,7 @@ import Context from '@/presentation/contexts/form/form-context'
 import { Validation } from '@/presentation/protocols/validation'
 import { Authentication, SaveAccessToken } from '@/domain/usecases'
 import { Link, useHistory } from 'react-router-dom'
+import SubmitButton from '@/presentation/components/submit-button/submit-button'
 
 type Props = {
     validation: Validation
@@ -16,6 +17,7 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
     const history = useHistory()
     const [state, setState] = useState({
         isLoading: false,
+        isFormInvalid: true,
         email: '',
         password: '',
         mainError: '',
@@ -24,22 +26,27 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
     })
 
     useEffect(() => {
+        const emailError = validation.validate('email', state.email)
         setState({
             ...state,
-            emailError: validation.validate('email', state.email)
+            emailError,
+            isFormInvalid: !!emailError || !!state.passwordError
+
         })
     }, [state.email])
     useEffect(() => {
+        const passwordError = validation.validate('password', state.password)
         setState(oldState => ({
             ...oldState,
-            passwordError: validation.validate('password', state.password)
+            passwordError,
+            isFormInvalid: !!state.emailError || !!passwordError
         }))
     }, [state.password, validation])
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault()
         try {
-            if (state.isLoading || state.emailError || state.passwordError) {
+            if (state.isLoading || state.isFormInvalid) {
                 return
             }
             setState({ ...state, isLoading: true })
@@ -67,7 +74,7 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
                     <h2> Login </h2>
                     <Input type="email" name="email" placeholder='Digite seu e-mail'></Input>
                     <Input type="password" name="password" placeholder='Digite sua senha'></Input>
-                    <button data-testid="submit" disabled={!!state.emailError || !!state.passwordError} className={Styles.submit} type="submit">Entrar</button>
+                    <SubmitButton text="Entrar"></SubmitButton>
                     <Link to="/signup" data-testid='register' className={Styles.link}>Criar conta</Link>
                     <FormStatus ></FormStatus>
                 </form>
