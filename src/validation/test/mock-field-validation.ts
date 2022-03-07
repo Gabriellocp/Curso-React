@@ -6,7 +6,7 @@ export class FieldValidationSpy implements FieldValidation {
     }
 
     error: Error = null
-    validate(value: string): Error {
+    validate(input: object): Error {
         return this.error
     }
 }

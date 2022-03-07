@@ -30,13 +30,13 @@ describe('ValidationComposite', () => {
         ]
         fieldValidationSpies[0].error = new Error(mockedErrors[0])
         fieldValidationSpies[1].error = new Error(mockedErrors[1])
-        const error = sut.validate(field, faker.random.word())
+        const error = sut.validate(field, { [field]: faker.random.word() })
         expect(error).toBe(mockedErrors[0])
     })
     test('Should return falsy if every validation succeeds', () => {
         const field = faker.database.column()
         const { sut } = makeSut(field)
-        const error = sut.validate(field, faker.random.word())
+        const error = sut.validate(field, { [field]: faker.random.word() })
         expect(error).toBeFalsy()
     })
 })

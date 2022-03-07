@@ -3,8 +3,8 @@ import { FieldValidation } from "@/validation/protocols/field-validation"
 
 export class EmailValidation implements FieldValidation {
     constructor(readonly field: string) { }
-    validate(value: string): Error {
+    validate(input: object): Error {
         const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
-        return (emailRegex.test(value) || !value) ? null : new InvalidFieldError(this.field)
+        return (emailRegex.test(input[this.field]) || !input[this.field]) ? null : new InvalidFieldError(this.field)
     }
 }
