@@ -1,9 +1,10 @@
 import faker from 'faker'
+const minPassLength = 5
+const baseUrl: string = Cypress.config().baseUrl
 describe('Login', () => {
     beforeEach(() => {
         cy.visit('login')
     })
-    const minPassLength = 5
     it('Should load with correct initial state', () => {
         cy.getByTestId('emailStatus')
             .should('have.attr', 'title', 'Campo obrigatório')
@@ -37,6 +38,17 @@ describe('Login', () => {
             .should('contain.text', '😎')
         cy.getByTestId('submit').should('not.have.attr', 'disabled')
         cy.getByTestId('error-wrap').should('not.have.descendants')
+    })
+    it('Should present error if invalid credentials are provided', () => {
+        cy.getByTestId('email').focus().type(faker.internet.email())
+        cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
+        cy.getByTestId('submit').click()
+        cy.getByTestId('error-wrap')
+            .getByTestId('spinner').should('exist')
+            .getByTestId('mainError').should('not.exist')
+            .getByTestId('spinner').should('not.exist')
+            .getByTestId('mainError').should('contain.text', 'Credenciais inválidas')
+        cy.url().should('eq', `${baseUrl}/login`)
     })
 
 })
