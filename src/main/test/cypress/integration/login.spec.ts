@@ -67,6 +67,22 @@ describe('Login', () => {
             .getByTestId('mainError').should('contain.text', 'Aconteceu algo inesperado...')
         cy.url().should('eq', `${baseUrl}/login`)
     })
+    it('Should present error if invalid property is returned', () => {
+        cy.intercept(/login/, {
+            statusCode: 200,
+            body: {
+                invalidProperty: faker.random.uuid(),
+                error: faker.random.words()
+            }
+
+        })
+        cy.getByTestId('email').focus().type('mango@gmail.com')
+        cy.getByTestId('password').focus().type('12345')
+        cy.getByTestId('submit').click()
+        cy.getByTestId('mainError').should('exist')
+        cy.getByTestId('spinner').should('not.exist')
+        cy.url().should('eq', `${baseUrl}/login`)
+    })
 
     it('Should present save AccessToken if valid credentials are provided', () => {
         cy.intercept(/login/, {
