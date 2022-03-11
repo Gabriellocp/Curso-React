@@ -118,6 +118,18 @@ describe('Login', () => {
         cy.window().then(window => assert.isOk(window.localStorage.getItem('accessToken')))
         cy.get('@mockedResponse.all').should('have.length', 1)
     })
+    it('Should prevent invalid form on submit', () => {
+        cy.intercept(/login/, {
+            statusCode: 200,
+            body: {
+                accessToken: faker.random.uuid(),
+                error: faker.random.words()
+            }
+
+        }).as('mockedResponse')
+        cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
+        cy.get('@mockedResponse.all').should('have.length', 0)
+    })
 
 
 })
