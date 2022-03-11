@@ -53,6 +53,20 @@ describe('Login', () => {
             .getByTestId('mainError').should('contain.text', 'Credenciais inválidas')
         cy.url().should('eq', `${baseUrl}/login`)
     })
+    it('Should present unexpected error (ERROR 400)', () => {
+        cy.intercept(/login/, {
+            statusCode: 400,
+            error: faker.random.words()
+
+        })
+        cy.getByTestId('email').focus().type(faker.internet.email())
+        cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
+        cy.getByTestId('submit').click()
+        cy.getByTestId('error-wrap')
+            .getByTestId('spinner').should('not.exist')
+            .getByTestId('mainError').should('contain.text', 'Aconteceu algo inesperado...')
+        cy.url().should('eq', `${baseUrl}/login`)
+    })
 
     it('Should present save AccessToken if valid credentials are provided', () => {
         cy.intercept(/login/, {
