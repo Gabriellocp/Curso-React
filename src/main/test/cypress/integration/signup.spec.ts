@@ -61,5 +61,11 @@ describe('Signup', () => {
         FormHelper.testUrl('/signup')
 
     })
+    it('Should present unexpected error (ERROR 400)', () => {
+        HttpMock.mockUnexpectedError()
+        simulateValidSubmit()
+        FormHelper.testMainError('Aconteceu algo inesperado...')
+        FormHelper.testUrl('/signup')
+    })
 }
 )
