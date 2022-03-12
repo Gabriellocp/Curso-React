@@ -1,4 +1,5 @@
 import * as FormHelper from '../support/form-helper'
+import * as HttpMock from '../support/signup-mocks'
 import faker from 'faker'
 
 const minPassLength: number = 5
@@ -52,6 +53,13 @@ describe('Signup', () => {
         simulateValidSubmit()
         cy.getByTestId('submit').should('not.have.attr', 'disabled')
         cy.getByTestId('error-wrap').should('not.have.descendants')
+    })
+    it('Should present EmailInUse error (ERROR 403)', () => {
+        HttpMock.mockEmailInUseError()
+        simulateValidSubmit()
+        FormHelper.testMainError('E-mail já está sendo usado')
+        FormHelper.testUrl('/signup')
+
     })
 }
 )
