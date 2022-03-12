@@ -1,7 +1,7 @@
 import faker from 'faker'
 import * as FormHelper from '../support/form-helper'
 import * as HttpMock from '../support/login-mocks'
-const minPassLength = 5
+const minPassLength: number = 5
 
 const simulateValidSubmit = (): void => {
     cy.getByTestId('email').focus().type(faker.internet.email())
