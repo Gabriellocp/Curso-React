@@ -67,5 +67,11 @@ describe('Signup', () => {
         FormHelper.testMainError('Aconteceu algo inesperado...')
         FormHelper.testUrl('/signup')
     })
+    it('Should present error if invalid property is returned', () => {
+        HttpMock.mockInvalidData()
+        simulateValidSubmit()
+        FormHelper.testMainError('Aconteceu algo inesperado...')
+        FormHelper.testUrl('/signup')
+    })
 }
 )
