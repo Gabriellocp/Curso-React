@@ -21,3 +21,11 @@ export const mockOk = (pathUrl: RegExp, response: any): void => {
         body: response
     }).as('request')
 }
+
+export const mockEmailInUseError = (pathUrl: RegExp): void => {
+    cy.intercept(pathUrl, {
+        statusCode: 403,
+        error: faker.random.words()
+
+    }).as('request')
+}
