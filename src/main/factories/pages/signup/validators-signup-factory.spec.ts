@@ -6,7 +6,7 @@ describe('SignUpValidationFactory', () => {
     test('Should compose ValidationComposite with correct validations', () => {
         const composite = makeSignUpValidators()
         expect(composite).toEqual(ValidationComposite.build(
-            [...ValidationBuilder.field('name').required().build(),
+            [...ValidationBuilder.field('name').required().min(2).build(),
             ...ValidationBuilder.field('email').required().email().build(),
             ...ValidationBuilder.field('password').required().min(5).build(),
             ...ValidationBuilder.field('passwordConfirmation').required().min(5).sameAs('password').build()
