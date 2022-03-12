@@ -73,5 +73,12 @@ describe('Signup', () => {
         FormHelper.testMainError('Aconteceu algo inesperado...')
         FormHelper.testUrl('/signup')
     })
+    it('Should present save Account if valid credentials are provided', () => {
+        HttpMock.mockOk()
+        simulateValidSubmit()
+        cy.getByTestId('error-wrap').should('not.exist')
+        FormHelper.testUrl('/')
+        FormHelper.testLocalStorageItem('accessToken')
+    })
 }
 )
