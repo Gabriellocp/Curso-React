@@ -92,5 +92,10 @@ describe('Signup', () => {
         FormHelper.testLocalStorageItem('accessToken')
         FormHelper.testHttpCallsCount(1)
     })
+    it('Should prevent invalid form on submit', () => {
+        HttpMock.mockOk()
+        cy.getByTestId('name').focus().type(faker.name.findName()).type('{enter}')
+        FormHelper.testHttpCallsCount(0)
+    })
 }
 )
