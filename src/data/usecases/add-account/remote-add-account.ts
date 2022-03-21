@@ -6,7 +6,7 @@ import { AddAccount, AddAccountParams } from "@/domain/usecases"
 export class RemoteAddAccount implements AddAccount {
     constructor(
         private readonly url: string,
-        private readonly httpClient: HttpPostClient<AddAccountParams, AccountModel>
+        private readonly httpClient: HttpPostClient<AccountModel>
 
     ) { }
 
