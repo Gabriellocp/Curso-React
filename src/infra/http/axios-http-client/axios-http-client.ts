@@ -1,4 +1,4 @@
-import { HttpPostClient, HttpPostParams, HttpResponse } from "@/data/protocols/http"
+import { HttpGetParams, HttpPostClient, HttpPostParams, HttpResponse } from "@/data/protocols/http"
 import axios from "axios"
 
 export class AxiosHttpClient implements HttpPostClient {
@@ -16,5 +16,9 @@ export class AxiosHttpClient implements HttpPostClient {
                 body: error.response.data
             }
         }
+    }
+
+    async get(params: HttpGetParams): Promise<void> {
+        await axios.get(params.url)
     }
 }
