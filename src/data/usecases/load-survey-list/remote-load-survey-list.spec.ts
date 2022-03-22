@@ -2,6 +2,7 @@ import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpGetClientSpy } from '@/data/test'
 import { UnexpectedError } from '@/domain/errors'
 import { SurveyModel } from '@/domain/models'
+import { mockSurveyListModel } from '@/domain/test'
 import faker from 'faker'
 import { RemoteLoadSurveyList } from './remote-load-survey-list'
 
@@ -32,7 +33,7 @@ describe('RemoteLoadSurveyList', () => {
             statusCode: HttpStatusCode.forbidden
         }
         const promise = sut.loadAll()
-        expect(promise).rejects.toThrow(new UnexpectedError())
+        await expect(promise).rejects.toThrow(new UnexpectedError())
     })
     test('Should throw UnexpectedError HttpClient returns 404', async () => {
         const { sut, httpGetClientSpy } = makeSut()
@@ -40,7 +41,7 @@ describe('RemoteLoadSurveyList', () => {
             statusCode: HttpStatusCode.notFound
         }
         const promise = sut.loadAll()
-        expect(promise).rejects.toThrow(new UnexpectedError())
+        await expect(promise).rejects.toThrow(new UnexpectedError())
     })
     test('Should throw UnexpectedError HttpClient returns 500', async () => {
         const { sut, httpGetClientSpy } = makeSut()
@@ -48,6 +49,16 @@ describe('RemoteLoadSurveyList', () => {
             statusCode: HttpStatusCode.serverError
         }
         const promise = sut.loadAll()
-        expect(promise).rejects.toThrow(new UnexpectedError())
+        await expect(promise).rejects.toThrow(new UnexpectedError())
+    })
+    test('Should return a list of SurveyModels if HttpGetClient returns 200', async () => {
+        const { sut, httpGetClientSpy } = makeSut()
+        const httpResult = mockSurveyListModel()
+        httpGetClientSpy.response = {
+            statusCode: HttpStatusCode.ok,
+            body: httpResult
+        }
+        const surveyList = await sut.loadAll()
+        expect(surveyList).toEqual(httpResult)
     })
 })
