@@ -1,5 +1,6 @@
 @import '../../styles/colors.scss';
 
+$maxSize: 20px;
 .surveyList {
     background-color: $background;
     display: flex;
@@ -74,6 +75,7 @@
             justify-content: space-between;
             li{ 
                 background-color: white;
+                position: relative;
                 height: 200px;
                 display: flex;
                 flex-direction: column;
@@ -89,6 +91,24 @@
                     border-radius: 3px 3px 0px 0px;
                     flex-grow: 1;
                     background-image: linear-gradient(to right, rgba($primaryDark, 0.3), rgba($primary, 0.3));
+                    .showResponse {
+                        text-align: center;
+                        line-height: $maxSize*2;
+                        border-radius: $maxSize;
+                        height: $maxSize*2;
+                        width: $maxSize*2;
+                        font-size: $maxSize;
+                        position: absolute;
+                        top: -15px;
+                        right: -10px;
+
+                        &.green { 
+                            background-color: $valid;
+                        }
+                        &.red { 
+                            background-color: $invalid;
+                        }
+                    }
                     p{
                         font-size: 18px;
                         margin: 15px;
