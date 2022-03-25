@@ -1,0 +1,22 @@
+@import '../../styles/colors.scss';
+
+$maxSize: 20px;
+
+.showResponse {
+    text-align: center;
+    line-height: $maxSize*2;
+    border-radius: $maxSize;
+    height: $maxSize*2;
+    width: $maxSize*2;
+    font-size: $maxSize;
+    position: absolute;
+    top: -15px;
+    right: -10px;
+
+    &.green { 
+        background-color: $valid;
+    }
+    &.red { 
+        background-color: $invalid;
+    }
+}
