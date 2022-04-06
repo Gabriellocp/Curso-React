@@ -62,7 +62,7 @@ describe('Login', () => {
         simulateValidSubmit()
         cy.getByTestId('error-wrap').should('not.exist')
         FormHelper.testUrl('/')
-        FormHelper.testLocalStorageItem('accessToken')
+        FormHelper.testLocalStorageItem('account')
     })
 
     it('Should prevent multiple submits', () => {
@@ -71,7 +71,6 @@ describe('Login', () => {
         cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
         cy.getByTestId('submit').dblclick()
         FormHelper.testUrl('/')
-        FormHelper.testLocalStorageItem('accessToken')
         FormHelper.testHttpCallsCount(1)
     })
     it('Should prevent invalid form on submit', () => {

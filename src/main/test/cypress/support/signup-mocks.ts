@@ -8,5 +8,6 @@ export const mockInvalidData = (): void => Helper.mockOk(/signup/, {
 })
 export const mockOk = (): void => Helper.mockOk(/signup/, {
     accessToken: faker.random.uuid(),
+    name: faker.name.findName(),
     error: faker.random.words()
 })

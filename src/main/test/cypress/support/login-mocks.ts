@@ -4,6 +4,7 @@ export const mockInvalidCredentialsError = (): void => Helper.mockInvalidCredent
 export const mockUnexpectedError = (): void => Helper.mockUnexpectedError(/login/)
 export const mockOk = (): void => Helper.mockOk(/login/, {
     accessToken: faker.random.uuid(),
+    name: faker.name.findName(),
     error: faker.random.words()
 })
 
