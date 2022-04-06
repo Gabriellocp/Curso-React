@@ -4,7 +4,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { makeLogin } from '@/main/factories/pages/login/login-factory'
 import { makeSignUp } from '@/main/factories/pages/signup/signup-factory'
 import { ApiContext } from "@/presentation/contexts"
-import { setCurrentAccountAdapter } from "../adapters/current-account-adapter"
+import { getCurrentAccountAdapter, setCurrentAccountAdapter } from "../adapters/current-account-adapter"
+import { PrivateRoute } from "@/presentation/components"
 // type Factory = {
 //     makeLogin: React.FC
 //     makeSignup: React.FC
@@ -16,13 +17,14 @@ const Router: React.FC = () => {
         <ApiContext.Provider
             value={{
                 setCurrentAccount: setCurrentAccountAdapter,
+                getCurrentAccount: getCurrentAccountAdapter
 
             }}>
             <BrowserRouter>
                 <Switch>
                     <Route path='/login' exact component={makeLogin} />
                     <Route path='/signup' exact component={makeSignUp} />
-                    <Route path='/' exact component={SurveyList} />
+                    <PrivateRoute path='/' exact component={SurveyList} />
 
                 </Switch>
 
