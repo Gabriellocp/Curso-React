@@ -1,0 +1,38 @@
+.listWrap {
+    ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+    }
+}
+
+@media only screen and (max-width: 600px) {
+
+    .surveyList {
+        .mainContent {
+            max-width: 98vw;
+
+            ul {
+                flex-direction: column;
+
+                li {
+                    flex-basis: 100%;
+
+                    .surveyContent {
+                        time {
+                            margin: 30px 0px 30px 15px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}

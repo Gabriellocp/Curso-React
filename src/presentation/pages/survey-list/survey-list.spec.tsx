@@ -4,6 +4,7 @@ import SurveyList from "./survey-list"
 import { LoadSurveyList } from "@/domain/usecases/load-survey-list"
 import { SurveyModel } from "@/domain/models"
 import { mockSurveyListModel } from "@/domain/test"
+import { UnexpectedError } from "@/domain/errors"
 
 const surveyElements: number = 2
 
@@ -20,8 +21,7 @@ class LoadSurveyListSpy implements LoadSurveyList {
     }
 }
 
-const makeSut = (): SutTypes => {
-    const loadSurveyListSpy = new LoadSurveyListSpy()
+const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
     render(<SurveyList loadSurveyList={loadSurveyListSpy}></SurveyList>)
     return {
         loadSurveyListSpy
@@ -32,6 +32,8 @@ describe('SurveyList component', () => {
         makeSut()
         const surveyList = screen.getByTestId('surveyList')
         expect(surveyList.querySelectorAll('li:empty')).toHaveLength(4)
+        expect(screen.queryByTestId('error')).not.toBeInTheDocument()
+
         await waitFor(() => surveyList)
     })
     test('Should call LoadSurveyList', async () => {
@@ -39,10 +41,19 @@ describe('SurveyList component', () => {
         expect(loadSurveyListSpy.callsCount).toBe(1)
         await waitFor(() => screen)
     })
-    test('Should ', async () => {
+    test('Should render SurveyItem on success', async () => {
         makeSut()
         const surveyList = screen.getByTestId('surveyList')
         await waitFor(() => surveyList)
         expect(surveyList.querySelectorAll('li.surveyItemWrap')).toHaveLength(surveyElements)
+    })
+    test('Should render error on failure', async () => {
+        const loadSurveyListSpy = new LoadSurveyListSpy()
+        const error = new UnexpectedError()
+        jest.spyOn(loadSurveyListSpy, 'loadAll').mockRejectedValueOnce(error)
+        makeSut(loadSurveyListSpy)
+        await waitFor(() => screen.getByRole('heading'))
+        expect(screen.queryByTestId('surveyList')).not.toBeInTheDocument()
+        expect(screen.getByTestId('error')).toHaveTextContent(error.message)
     })
 })
