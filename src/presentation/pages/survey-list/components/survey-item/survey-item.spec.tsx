@@ -4,12 +4,18 @@ import { mockSurveyModel } from "@/domain/test"
 import { SurveyItem } from "@/presentation/pages/survey-list/components"
 import { IconName } from "@/presentation/components/response-icon/response-icon"
 const surveyElements: number = 3
+
+const makeSut = (survey = mockSurveyModel()): void => {
+    render(<SurveyItem survey={survey}></SurveyItem>)
+}
+
 describe('SurveyItem component', () => {
     test('Should show correct information on render', () => {
-        const survey = mockSurveyModel()
-        survey.didAnswer = true
-        survey.date = new Date('2020-01-10T00:00:00')
-        render(<SurveyItem survey={survey}></SurveyItem>)
+        const survey = Object.assign(mockSurveyModel(), {
+            didAnswer: true,
+            date: new Date('2020-01-10T00:00:00')
+        })
+        makeSut(survey)
         expect(screen.getByTestId('icon')).toHaveTextContent(IconName.hasResponse)
         expect(screen.getByTestId('question')).toHaveTextContent(survey.question)
         expect(screen.getByTestId('day')).toHaveTextContent('10')
