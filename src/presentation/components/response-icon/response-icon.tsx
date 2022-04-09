@@ -12,7 +12,7 @@ type Props = {
 const ResponseIcon: React.FC<Props> = ({ iconName }: Props) => {
     const statusColor = iconName === IconName.noResponse ? Styles.red : Styles.green
     return (
-        <div className={[Styles.showResponse, statusColor].join(' ')}>
+        <div className={[Styles.showResponse, statusColor].join(' ')} data-testid="icon">
             {iconName}
         </div>
     )
