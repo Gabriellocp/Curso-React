@@ -16,7 +16,11 @@ export const mockSurveyModel = (): SurveyModel => ({
 
 })
 
-export const mockSurveyListModel = (numberOfObjects: number): SurveyModel[] => ([
-    ...Array(numberOfObjects).fill(mockSurveyModel())
-])
+export const mockSurveyListModel = (numberOfObjects: number): SurveyModel[] => {
+    let listOfMockedSurveys: Array<SurveyModel> = []
+    for (let i = 0; i < numberOfObjects; i++) {
+        listOfMockedSurveys.push(mockSurveyModel())
+    }
+    return listOfMockedSurveys
+}
 

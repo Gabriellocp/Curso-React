@@ -3,7 +3,6 @@ import React from "react"
 import { mockSurveyModel } from "@/domain/test"
 import { SurveyItem } from "@/presentation/pages/survey-list/components"
 import { IconName } from "@/presentation/components/response-icon/response-icon"
-const surveyElements: number = 3
 
 const makeSut = (survey = mockSurveyModel()): void => {
     render(<SurveyItem survey={survey}></SurveyItem>)
