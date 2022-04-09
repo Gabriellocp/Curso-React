@@ -53,7 +53,7 @@ describe('RemoteLoadSurveyList', () => {
     })
     test('Should return a list of SurveyModels if HttpGetClient returns 200', async () => {
         const { sut, httpGetClientSpy } = makeSut()
-        const httpResult = mockSurveyListModel()
+        const httpResult = mockSurveyListModel(3)
         httpGetClientSpy.response = {
             statusCode: HttpStatusCode.ok,
             body: httpResult

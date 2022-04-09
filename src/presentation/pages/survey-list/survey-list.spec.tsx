@@ -33,6 +33,5 @@ describe('SurveyList component', () => {
     test('Should call LoadSurveyList', () => {
         const { loadSurveyListSpy } = makeSut()
         expect(loadSurveyListSpy.callsCount).toBe(1)
-
     })
 })
