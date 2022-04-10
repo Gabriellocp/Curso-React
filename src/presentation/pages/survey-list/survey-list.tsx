@@ -2,7 +2,7 @@ import { SurveyModel } from "@/domain/models"
 import { LoadSurveyList } from "@/domain/usecases/load-survey-list"
 import { Footer, Header } from "@/presentation/components"
 import React, { useEffect, useState } from "react"
-import { ErrorItem, ListItem, SurveyContext, SurveyItem, SurveyItemEmpty } from "./components"
+import { ErrorItem, ListItem, SurveyContext } from "./components"
 import Styles from './survey-list-styles.scss'
 
 type Props = {
@@ -28,14 +28,14 @@ const SurveyList: React.FC<Props> = ({ loadSurveyList }: Props) => {
             <SurveyContext.Provider value={{ state, setState }}>
                 <div className={Styles.mainContent}>
                     <h2> Enquetes </h2>
+
                     {
-                        state.error ?
+                        !state.error ?
                             <ErrorItem></ErrorItem>
                             :
                             <ListItem></ListItem>
 
                     }
-
 
                 </div>
             </SurveyContext.Provider>

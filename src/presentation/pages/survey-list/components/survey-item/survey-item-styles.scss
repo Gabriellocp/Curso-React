@@ -1,6 +1,6 @@
 @import "../../../../styles/colors.scss";
 
-.surveyItemWrap{ 
+.surveyItemWrap {
     background-color: white;
     position: relative;
     height: 200px;
@@ -11,21 +11,22 @@
     flex-basis: 48%;
     box-shadow: 0px 1px 3px -1px black;
 
-    .surveyContent{
+    .surveyContent {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         border-radius: 3px 3px 0px 0px;
         flex-grow: 1;
         background-image: linear-gradient(to right, rgba($primaryDark, 0.3), rgba($primary, 0.3));
-        
-        p{
+
+        p {
             font-size: 18px;
             margin: 15px;
             align-self: center;
             flex-grow: 1;
         }
-        time{
+
+        time {
             border-radius: 2px;
             margin-left: 15px;
             background-color: $primaryLight;
@@ -39,37 +40,50 @@
             color: white;
             justify-content: center;
             flex-shrink: 0;
-            .day{
+
+            .day {
                 font-size: 30px;
                 font-weight: bold;
             }
-            .month{
+
+            .month {
                 font-size: 25px;
                 text-transform: lowercase;
                 margin: 0px 0px 3px;
             }
-            .year{
+
+            .year {
                 font-size: 20px;
             }
-            hr{
+
+            hr {
                 border-color: $background;
                 width: 90%;
             }
         }
-       
+
     }
-    footer{
+
+    footer {
         background-color: $primary;
         color: white;
         text-align: center;
         line-height: 40px;
         border-radius: 0px 0px 3px 3px;
-        &:hover{
+
+        &:hover {
             background-color: $primaryDark;
         }
+
         cursor: pointer;
     }
 
-   
+
 }
 
+@media only screen and (max-width: 600px) {
+    .surveyItemWrap {
+        flex-basis: 100%;
+    }
+
+}
