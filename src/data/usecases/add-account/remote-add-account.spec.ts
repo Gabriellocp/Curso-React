@@ -1,6 +1,5 @@
 import { HttpPostClientSpy } from "@/data/test"
 import faker from 'faker'
-import { AddAccountParams } from "@/domain/usecases"
 import { AccountModel } from "@/domain/models"
 import { mockAccountModel, mockAddAccount } from "@/domain/test"
 import { RemoteAddAccount } from "./remote-add-account"

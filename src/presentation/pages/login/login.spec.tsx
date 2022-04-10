@@ -162,7 +162,6 @@ describe('Login Component', () => {
     })
     test('Should call UpdateCurrentAccount on success', async () => {
         const { authenticationSpy, setCurrentAccountMock } = makeSut()
-
         await simulateValidSubmit()
         expect(setCurrentAccountMock).toHaveBeenCalledWith(authenticationSpy.account)
         expect(history.length).toBe(1)

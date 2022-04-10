@@ -16,5 +16,3 @@ export const populateField = (fieldName: string, value = faker.random.words()): 
     fireEvent.input(input, { target: { value } })
 
 }
-
-

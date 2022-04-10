@@ -3,7 +3,6 @@ import { RemoteAuthentication } from "./remote-authentication"
 import { mockAccountModel, mockAuthentication } from "@/domain/test"
 import { InvalidCredentialsError, UnexpectedError } from "@/domain/errors"
 import { HttpStatusCode } from "@/data/protocols/http"
-import { AuthenticationParams } from "@/domain/usecases"
 import { AccountModel } from "@/domain/models/account-model"
 import faker from 'faker'
 
