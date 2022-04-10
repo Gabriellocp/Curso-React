@@ -30,7 +30,7 @@ const SurveyList: React.FC<Props> = ({ loadSurveyList }: Props) => {
                     <h2> Enquetes </h2>
 
                     {
-                        !state.error ?
+                        state.error ?
                             <ErrorItem></ErrorItem>
                             :
                             <ListItem></ListItem>

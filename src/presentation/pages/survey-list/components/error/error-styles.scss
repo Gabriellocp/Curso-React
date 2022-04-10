@@ -1,0 +1,23 @@
+@import "../../../../styles/colors.scss";
+
+.errorWrap {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    align-self: center;
+
+    button {
+        background-color: white;
+        color: $primaryLight;
+        width: 50%;
+    }
+
+    span {
+        font-size: 20px;
+        color: white;
+        text-transform: uppercase;
+    }
+}
