@@ -2,6 +2,7 @@ import { HttpGetClient, HttpGetParams, HttpResponse, HttpStatusCode } from "../p
 import faker from 'faker'
 export const mockGetRequest = (): HttpGetParams => ({
     url: faker.internet.url(),
+    headers: faker.random.objectElement()
 })
 export class HttpGetClientSpy<R> implements HttpGetClient<R> {
     url: string
