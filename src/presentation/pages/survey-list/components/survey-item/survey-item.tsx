@@ -1,11 +1,11 @@
-import { SurveyModel } from "@/domain/models"
+import { LoadSurveyList } from "@/domain/usecases/load-survey-list"
 import { ResponseIcon } from "@/presentation/components"
 import { IconName } from "@/presentation/components/response-icon/response-icon"
 import React from "react"
 import Styles from "./survey-item-styles.scss"
 
 type Props = {
-    survey: SurveyModel
+    survey: LoadSurveyList.Model
 }
 const SurveyItem: React.FC<Props> = ({ survey }: Props) => {
     const iconName = survey.didAnswer ? IconName.hasResponse : IconName.noResponse

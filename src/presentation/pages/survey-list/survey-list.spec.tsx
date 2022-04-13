@@ -2,7 +2,6 @@ import React from "react"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import SurveyList from "./survey-list"
 import { LoadSurveyList } from "@/domain/usecases/load-survey-list"
-import { SurveyModel } from "@/domain/models"
 import { mockSurveyListModel } from "@/domain/test"
 import { UnexpectedError } from "@/domain/errors"
 
@@ -14,8 +13,8 @@ type SutTypes = {
 
 class LoadSurveyListSpy implements LoadSurveyList {
     callsCount: number = 0
-    surveys: SurveyModel[] = mockSurveyListModel(surveyElements)
-    async loadAll(): Promise<SurveyModel[]> {
+    surveys: LoadSurveyList.Model[] = mockSurveyListModel(surveyElements)
+    async loadAll(): Promise<LoadSurveyList.Model[]> {
         this.callsCount++
         return this.surveys
     }

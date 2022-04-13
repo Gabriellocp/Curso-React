@@ -1,23 +1,16 @@
 import faker from 'faker'
-import { SurveyModel } from "@/domain/models"
+import { LoadSurveyList } from '../usecases/load-survey-list'
 
-export const mockSurveyModel = (): SurveyModel => ({
+export const mockSurveyModel = (): LoadSurveyList.Model => ({
     id: faker.random.uuid(),
     question: faker.random.words(10),
-    answers: [{
-        answer: faker.random.words(4),
-        image: faker.internet.url()
-    },
-    {
-        answer: faker.random.words(5),
-    }],
     didAnswer: faker.random.boolean(),
     date: faker.date.recent(),
 
 })
 
-export const mockSurveyListModel = (numberOfObjects: number): SurveyModel[] => {
-    let listOfMockedSurveys: Array<SurveyModel> = []
+export const mockSurveyListModel = (numberOfObjects: number): LoadSurveyList.Model[] => {
+    let listOfMockedSurveys: Array<LoadSurveyList.Model> = []
     for (let i = 0; i < numberOfObjects; i++) {
         listOfMockedSurveys.push(mockSurveyModel())
     }
