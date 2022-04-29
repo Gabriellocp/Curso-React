@@ -17,3 +17,15 @@ export const mockSurveyListModel = (numberOfObjects: number): LoadSurveyList.Mod
     return listOfMockedSurveys
 }
 
+export class LoadSurveyListSpy implements LoadSurveyList {
+    constructor(private surveyElements?: number) {
+        this.surveyElements = surveyElements ?? 0
+    }
+
+    callsCount: number = 0
+    surveys: LoadSurveyList.Model[] = mockSurveyListModel(this.surveyElements)
+    async loadAll(): Promise<LoadSurveyList.Model[]> {
+        this.callsCount++
+        return this.surveys
+    }
+}
