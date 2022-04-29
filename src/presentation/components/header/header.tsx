@@ -1,16 +1,16 @@
 import { ApiContext } from "@/presentation/contexts"
+import { useLogout } from "@/presentation/hooks"
 import React, { memo, useContext } from "react"
 import { useHistory } from "react-router-dom"
 import Logo from "../logo/logo"
 import Styles from './header-styles.scss'
 
 const Header: React.FC = () => {
-    const { setCurrentAccount, getCurrentAccount } = useContext(ApiContext)
-    const history = useHistory()
+    const handleLogout = useLogout()
+    const { getCurrentAccount } = useContext(ApiContext)
     const logout: React.MouseEventHandler = (event: React.MouseEvent): void => {
         event.preventDefault()
-        setCurrentAccount(undefined)
-        history.replace('/login')
+        handleLogout()
     }
     return (
         <header className={Styles.header}>
