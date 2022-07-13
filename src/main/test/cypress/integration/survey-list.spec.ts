@@ -29,4 +29,10 @@ describe('SurveyList', () => {
         const {name} = Helpers.getLocalStorageItem('account')
         cy.getByTestId('username').should('contain.text',name)
     })
+    it('Should logout when button is clicked', () => {
+        Http.mockUnexpectedError()
+        //If some type of error occurs, put cy.visit('') here
+        cy.getByTestId('logout').click()
+        Helpers.testUrl('/login')
+    })
 })
