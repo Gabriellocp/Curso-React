@@ -1,6 +1,7 @@
 import faker from 'faker'
 import * as FormHelper from '../support/form-helper'
 import * as HttpMock from '../support/login-mocks'
+import * as Helpers from '../support/helpers'
 const minPassLength: number = 5
 
 const simulateValidSubmit = (): void => {
@@ -31,9 +32,10 @@ describe('Login', () => {
         cy.getByTestId('error-wrap').should('not.have.descendants')
     })
     it('Should present valid state if form is valid', () => {
+        cy.getByTestId('email').focus().type(faker.internet.email())
         FormHelper.helperInputStatus('email')
+        cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
         FormHelper.helperInputStatus('password')
-        simulateValidSubmit()
         cy.getByTestId('submit').should('not.have.attr', 'disabled')
         cy.getByTestId('error-wrap').should('not.have.descendants')
     })
@@ -41,28 +43,21 @@ describe('Login', () => {
         HttpMock.mockInvalidCredentialsError()
         simulateValidSubmit()
         FormHelper.testMainError('Credenciais inválidas')
-        FormHelper.testUrl('/login')
+        Helpers.testUrl('/login')
 
     })
     it('Should present unexpected error (ERROR 400)', () => {
         HttpMock.mockUnexpectedError()
         simulateValidSubmit()
         FormHelper.testMainError('Aconteceu algo inesperado...')
-        FormHelper.testUrl('/login')
+        Helpers.testUrl('/login')
     })
-    it('Should present error if invalid property is returned', () => {
-        HttpMock.mockInvalidData()
-        simulateValidSubmit()
-        FormHelper.testMainError('Aconteceu algo inesperado...')
-        FormHelper.testUrl('/login')
-    })
-
     it('Should present save AccessToken if valid credentials are provided', () => {
         HttpMock.mockOk()
         simulateValidSubmit()
         cy.getByTestId('error-wrap').should('not.exist')
-        FormHelper.testUrl('/')
-        FormHelper.testLocalStorageItem('account')
+        Helpers.testUrl('/')
+        Helpers.testLocalStorageItem('account')
     })
 
     it('Should prevent multiple submits', () => {
@@ -70,13 +65,13 @@ describe('Login', () => {
         cy.getByTestId('email').focus().type(faker.internet.email())
         cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
         cy.getByTestId('submit').dblclick()
-        FormHelper.testUrl('/')
-        FormHelper.testHttpCallsCount(1)
+        Helpers.testUrl('/')
+        Helpers.testHttpCallsCount(1)
     })
     it('Should prevent invalid form on submit', () => {
         HttpMock.mockOk()
         cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
-        FormHelper.testHttpCallsCount(0)
+        Helpers.testHttpCallsCount(0)
     })
 
 
