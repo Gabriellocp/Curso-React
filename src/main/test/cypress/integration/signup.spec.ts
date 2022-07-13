@@ -1,10 +1,14 @@
-import * as FormHelper from '../support/form-helper'
-import * as HttpMock from '../support/signup-mocks'
-import * as Helpers from '../support/helpers'
+import * as FormHelper from '../utils/form-helper'
+import * as Http from '../utils/http-mocks'
+import * as Helpers from '../utils/helpers'
 import faker from 'faker'
 
 const minPassLength: number = 5
 const minNameLength: number = 2
+const path = /signup/
+const mockEmailInUseError = (): void => Http.mockForbiddenError(path)
+const mockUnexpectedError = (): void => Http.mockServerError(path)
+const mockSuccess = (): void => Http.mockOk(path, 'account')
 
 const simulateValidSubmit = (): void => {
     const password = faker.random.alphaNumeric(5)
@@ -60,20 +64,20 @@ describe('Signup', () => {
         cy.getByTestId('error-wrap').should('not.have.descendants')
     })
     it('Should present EmailInUse error (ERROR 403)', () => {
-        HttpMock.mockEmailInUseError()
+        mockEmailInUseError()
         simulateValidSubmit()
         FormHelper.testMainError('E-mail já está sendo usado')
         Helpers.testUrl('/signup')
 
     })
     it('Should present unexpected error (ERROR 400)', () => {
-        HttpMock.mockUnexpectedError()
+        mockUnexpectedError()
         simulateValidSubmit()
         FormHelper.testMainError('Aconteceu algo inesperado...')
         Helpers.testUrl('/signup')
     })
     it('Should present save Account if valid credentials are provided', () => {
-        HttpMock.mockOk()
+        mockSuccess()
         simulateValidSubmit()
         cy.getByTestId('error-wrap').should('not.exist')
         Helpers.testUrl('/')
@@ -81,7 +85,7 @@ describe('Signup', () => {
     })
     it('Should prevent multiple submits', () => {
         const password = faker.random.alphaNumeric(5)
-        HttpMock.mockOk()
+        mockSuccess()
         cy.getByTestId('name').focus().type(faker.name.findName())
         cy.getByTestId('email').focus().type(faker.internet.email())
         cy.getByTestId('password').focus().type(password)
@@ -91,7 +95,7 @@ describe('Signup', () => {
         Helpers.testHttpCallsCount(1)
     })
     it('Should prevent invalid form on submit', () => {
-        HttpMock.mockOk()
+        mockSuccess()
         cy.getByTestId('name').focus().type(faker.name.findName()).type('{enter}')
         Helpers.testHttpCallsCount(0)
     })

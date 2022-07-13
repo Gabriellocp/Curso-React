@@ -16,10 +16,15 @@ export const mockServerError = (pathUrl: RegExp): void => {
 }
 
 export const mockOk = (pathUrl: RegExp, response: any): void => {
-    cy.intercept(pathUrl, {
-        statusCode: 200,
-        body: response
-    }).as('request')
+    cy.fixture(response).then(
+        resp=>{
+            cy.intercept(pathUrl, {
+                statusCode: 200,
+                body: resp
+            }).as('request')
+        }
+    )
+   
 }
 
 export const mockForbiddenError = (pathUrl: RegExp): void => {
