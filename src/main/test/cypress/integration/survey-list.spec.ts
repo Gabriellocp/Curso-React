@@ -18,5 +18,9 @@ describe('SurveyList', () => {
         //If some type of error occurs, put cy.visit('') here
         cy.getByTestId('error').should('contain.text','Aconteceu algo inesperado...')
     })
-   
+    it('Should logout on AccessDeniedError', () => {
+        Http.mockAccessDeniedError()
+        //If some type of error occurs, put cy.visit('') here
+        Helpers.testUrl('/login')
+    })
 })
