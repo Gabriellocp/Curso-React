@@ -92,6 +92,7 @@ describe('Signup', () => {
         cy.getByTestId('passwordConfirmation').focus().type(password)
         cy.getByTestId('submit').dblclick()
         Helpers.testUrl('/')
+        cy.wait('@request')
         Helpers.testHttpCallsCount(1)
     })
     it('Should prevent invalid form on submit', () => {

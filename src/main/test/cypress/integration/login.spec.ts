@@ -70,6 +70,7 @@ describe('Login', () => {
         cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
         cy.getByTestId('submit').dblclick()
         Helpers.testUrl('/')
+        cy.wait('@request')
         Helpers.testHttpCallsCount(1)
     })
     it('Should prevent invalid form on submit', () => {

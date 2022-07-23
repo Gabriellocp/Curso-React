@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "webpack-dev-server --open --config webpack.dev.js ",
+    "dev:base": "webpack-dev-server  --config webpack.dev.js ",
+    "dev": "npm run dev:base -- --open ",
     "build": "webpack --config webpack.prod.js",
     "test": "cross-env NODE_ICU_DATA=node_modules/full-icu jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "npm test -- --watch",
@@ -13,6 +14,8 @@
     "test:ci": "npm test -- --coverage",
     "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info",
     "test:cypress": "cypress open",
+    "test:cypress:run": "cypress run",
+    "test:cypress:CI": "start-server-and-test dev:base http-get://localhost:8080 test:cypress:run",
     "check": "npm-check -u -s"
   },
   "author": "Gabriel Orlando Campista Petrucci",
@@ -57,6 +60,7 @@
     "mini-css-extract-plugin": "^2.6.1",
     "node-sass": "^7.0.1",
     "sass-loader": "^12.4.0",
+    "start-server-and-test": "^1.14.0",
     "style-loader": "^3.3.1",
     "ts-jest": "^27.1.3",
     "ts-loader": "^9.2.6",
