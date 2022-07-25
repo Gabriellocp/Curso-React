@@ -1,4 +1,4 @@
-import { Footer, Header, Loading } from "@/presentation/components"
+import { Calendar, Footer, Header, Loading } from "@/presentation/components"
 import Styles from './survey-result-styles.scss'
 import FlipMove from "react-flip-move"
 import React from "react"
@@ -7,7 +7,10 @@ const SurveyResult: React.FC = () =>{
         <div className={Styles.surveyResultWrap}>
            <Header></Header>
                 <div className={Styles.contentWrap}>
-                    <h2> Pergunta Teste </h2>
+                    <hgroup>
+                        <Calendar date={new Date()} className={Styles.calendarWrap}/>
+                        <h2> Pergunta Teste </h2>
+                    </hgroup>
                         <FlipMove className={Styles.answersList}>
                             <li>
                                 <img src=""></img>
