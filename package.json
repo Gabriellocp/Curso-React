@@ -15,7 +15,7 @@
     "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info",
     "test:cypress": "cypress open",
     "test:cypress:run": "cypress run",
-    "test:cypress:CI": "start-server-and-test dev:base http-get://localhost:8080 test:cypress:run",
+    "test:cypress:ci": "start-server-and-test dev:base http-get://localhost:8080 test:cypress:run",
     "check": "npm-check -u -s"
   },
   "author": "Gabriel Orlando Campista Petrucci",
