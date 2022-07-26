@@ -1,5 +1,5 @@
 import faker from 'faker'
-import { LoadSurveyResult } from '../usecases'
+import { LoadSurveyResult } from "@/domain/usecases"
 
 export const mockSurveyResultModel = (): LoadSurveyResult.Model => ({
     question: faker.random.words(10),
@@ -10,13 +10,13 @@ export const mockSurveyResultModel = (): LoadSurveyResult.Model => ({
             answer: faker.random.word(),
             count: faker.random.number(),
             percent: faker.random.number(100),
-            isCurrentAccountAnswer: faker.random.boolean()
+            isCurrentAccountAnswer: true
         },
         {
             answer: faker.random.word(),
             count: faker.random.number(),
             percent: faker.random.number(100),
-            isCurrentAccountAnswer: faker.random.boolean()
+            isCurrentAccountAnswer: false
         }
     ]
 
