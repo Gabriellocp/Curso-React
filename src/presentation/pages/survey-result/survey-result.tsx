@@ -3,6 +3,7 @@ import Styles from './survey-result-styles.scss'
 import FlipMove from "react-flip-move"
 import React, { useEffect, useState } from "react"
 import { LoadSurveyResult } from "@/domain/usecases"
+import { useErrorHandler } from "@/presentation/hooks"
 type Props = {
     loadSurveyResult: LoadSurveyResult
 }
@@ -17,9 +18,12 @@ const SurveyResult: React.FC<Props> = ({loadSurveyResult}:Props) =>{
     useEffect(()=>{
         loadSurveyResult.load()
         .then(surveyResult => setState(old => ({...old, surveyResult})))
-        .catch()
+        .catch(handleError)
 
     },[])
+    const handleError = useErrorHandler(
+        (error: Error) => setState(old=>({...old, surveyResult: null, error:error.message}))
+    )
     return (
         <div className={Styles.surveyResultWrap}>
            <Header></Header>
