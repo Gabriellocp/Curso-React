@@ -3,13 +3,12 @@ import Styles from './survey-result-styles.scss'
 import FlipMove from "react-flip-move"
 import React, { useEffect, useState } from "react"
 import { LoadSurveyResult } from "@/domain/usecases"
-
 type Props = {
     loadSurveyResult: LoadSurveyResult
 }
 
 const SurveyResult: React.FC<Props> = ({loadSurveyResult}:Props) =>{
-    const [state] = useState({
+    const [state, setState] = useState({
         isLoading: false,
         error: '',
         surveyResult: null as LoadSurveyResult.Model
@@ -17,37 +16,34 @@ const SurveyResult: React.FC<Props> = ({loadSurveyResult}:Props) =>{
 
     useEffect(()=>{
         loadSurveyResult.load()
-            .then()
-            .catch()
+        .then(surveyResult => setState(old => ({...old, surveyResult})))
+        .catch()
+
     },[])
     return (
         <div className={Styles.surveyResultWrap}>
            <Header></Header>
                 <div data-testid="survey-result" className={Styles.contentWrap}>
                     {state.surveyResult && 
-                    <>
-                    <hgroup>
-                        <Calendar date={new Date()} className={Styles.calendarWrap}/>
-                        <h2> Pergunta Teste </h2>
-                    </hgroup>
-                        <FlipMove className={Styles.answersList}>
-                            <li>
-                                <img src=""></img>
-                                <span className={Styles.answer}>Respotas</span>
-                                <span className={Styles.percent}>50%</span>
-                            </li>
-                            <li className={Styles.active}>
-                                <img src=""></img>
-                                <span className={Styles.answer}>Respotas</span>
-                                <span className={Styles.percent}>50%</span>
-                            </li>
-                            <li>
-                                <img src=""></img>
-                                <span className={Styles.answer}>Respotas</span>
-                                <span className={Styles.percent}>50%</span>
-                            </li>
+                     <>
+                        <hgroup>
+                            <Calendar date={state.surveyResult.date} className={Styles.calendarWrap}/>
+                            <h2 data-testid='question'> {state.surveyResult.question} </h2>
+                        </hgroup>
+                        <FlipMove data-testid='answers' className={Styles.answersList}>
+                            {
+                                state.surveyResult.answers.map(answer=> 
+                                    <li data-testid="answer-wrap" key={answer.answer} className={answer.isCurrentAccountAnswer ? Styles.active : ''}>
+                                        {answer.image && <img data-testid='image' alt={answer.answer} src={answer.image}></img>}
+                                        <span data-testid='answer' className={Styles.answer}>{answer.answer}</span>
+                                        <span data-testid='percent' className={Styles.percent}>{answer.percent}%</span>
+                                    </li>
+                                )
+                            }
+                                
+                            
                         </FlipMove>
-                    <button>Voltar</button>
+                        <button>Voltar</button>
                     </>
                     }
                     {state.isLoading && <Loading/>} 
