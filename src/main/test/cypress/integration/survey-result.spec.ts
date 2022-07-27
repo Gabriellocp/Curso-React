@@ -48,5 +48,13 @@ describe('SurveyResult', () => {
             }    
         )
     })
+    it('Should go back when button is clicked', () => {
+        // cy.visit('/').then(()=>cy.visit('/surveys/any_id'))
+        cy.visit('/')
+        cy.visit('/surveys/any_id')
+        mockSuccess()
+        cy.getByTestId('backbutton').click()
+        Helpers.testUrl('/')
+    })
     
 })
