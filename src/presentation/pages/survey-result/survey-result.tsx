@@ -4,6 +4,7 @@ import FlipMove from "react-flip-move"
 import React, { useEffect, useState } from "react"
 import { LoadSurveyResult } from "@/domain/usecases"
 import { useErrorHandler } from "@/presentation/hooks"
+import { useHistory } from "react-router-dom"
 type Props = {
     loadSurveyResult: LoadSurveyResult
 }
@@ -26,6 +27,7 @@ const SurveyResult: React.FC<Props> = ({loadSurveyResult}:Props) =>{
         (error: Error) => setState(old=>({...old, surveyResult: null, error:error.message}))
     )
     const reload = (): void => setState(old=>({ isLoading: false, error: '', surveyResult: null as LoadSurveyResult.Model, reload: !old.reload}))
+    const {goBack} = useHistory()
     return (
         <div className={Styles.surveyResultWrap}>
            <Header></Header>
@@ -49,7 +51,7 @@ const SurveyResult: React.FC<Props> = ({loadSurveyResult}:Props) =>{
                                 
                             
                         </FlipMove>
-                        <button>Voltar</button>
+                        <button data-testid="backbutton" onClick={goBack}>Voltar</button>
                     </>
                     }
                     {state.isLoading && <Loading/>} 
