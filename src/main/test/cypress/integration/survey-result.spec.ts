@@ -2,7 +2,7 @@ import * as Http from '../utils/http-mocks'
 import * as Helpers from '../utils/helpers'
 const path = /surveys/
 const mockUnexpectedError = (): void => Http.mockServerError(path)
-
+const mockSuccess = () : void => Http.mockOk(path, 'survey-result')
 describe('SurveyResult', () => {
     beforeEach(() => {
         cy.fixture('account').then(account=>{
@@ -13,7 +13,14 @@ describe('SurveyResult', () => {
         cy.visit('/surveys/any_id')
         mockUnexpectedError()
         cy.getByTestId('error').should('contain.text','Aconteceu algo inesperado...')
-        
+    })
+    it('Should reload page when button is clicked', () => {
+        cy.visit('/surveys/any_id')
+        mockUnexpectedError()
+        cy.getByTestId('error').should('contain.text','Aconteceu algo inesperado...')
+        mockSuccess()
+        cy.getByTestId('reload').click()
+        cy.getByTestId('question').should('exist')
     })
     
 })

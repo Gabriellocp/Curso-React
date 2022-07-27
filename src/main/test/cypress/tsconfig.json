@@ -3,7 +3,8 @@
         "types": [
             "cypress"
         ],
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
     },
     "include": [
         "../../../../node_modules/cypress",
