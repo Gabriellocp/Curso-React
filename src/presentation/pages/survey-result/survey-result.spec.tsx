@@ -133,7 +133,7 @@ describe('SurveyResult Component', ()=> {
         await waitFor(()=> screen.getByTestId('survey-result')) 
         const answersWrap = screen.queryAllByTestId('answer-wrap')
         fireEvent.click(answersWrap[1])
-        expect(screen.queryByTestId('loading')).toBeInTheDocument()
+        await waitFor(() => expect(screen.queryByTestId('loading')).toBeInTheDocument())
         expect(saveSurveyResultSpy.params).toEqual({
             answer: loadSurveyResultSpy.surveyResult.answers[1].answer
         })
@@ -150,7 +150,6 @@ describe('SurveyResult Component', ()=> {
         expect(screen.getByTestId('error')).toHaveTextContent(error.message)
         expect(screen.queryByTestId('question')).not.toBeInTheDocument()
         expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
-
     })
     test('Should logout on AcessDeniedError', async ()=>{
         const saveSurveyResultSpy = new SaveSurveyResultSpy()
@@ -158,8 +157,11 @@ describe('SurveyResult Component', ()=> {
         const { setCurrentAccountMock, history} = makeSut({saveSurveyResultSpy})
         await waitFor(() => screen.getByTestId('survey-result'))
         const answersWrap = screen.queryAllByTestId('answer-wrap')
-        fireEvent.click(answersWrap[1])
-        await waitFor(() => screen.getByTestId('survey-result'))
+        
+        await waitFor(() => {
+        screen.getByTestId('survey-result')
+        fireEvent.click(answersWrap[1])    
+        })
         expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined)
         expect(history.location.pathname).toBe('/login')
     })
@@ -183,8 +185,8 @@ describe('SurveyResult Component', ()=> {
         expect(answersWrap[0]).toHaveClass('active')
         expect(answersWrap[1]).not.toHaveClass('active')
         const images = screen.queryAllByTestId('image')
-        expect(images[0]).toHaveAttribute('src',surveyResult.answers[0].image)
-        expect(images[0]).toHaveAttribute('alt',surveyResult.answers[0].answer)
+        expect(images[0]).toHaveAttribute('src', surveyResult.answers[0].image)
+        expect(images[0]).toHaveAttribute('alt', surveyResult.answers[0].answer)
         expect(images[1]).toBeFalsy()
         const answers = screen.queryAllByTestId('answer')
         expect(answers[0]).toHaveTextContent(surveyResult.answers[0].answer)
@@ -193,6 +195,6 @@ describe('SurveyResult Component', ()=> {
         expect(percents[0]).toHaveTextContent(`${surveyResult.answers[0].percent}%`)
         expect(percents[1]).toHaveTextContent(`${surveyResult.answers[1].percent}%`)
         expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
-
-    })
+        
+        })
 })

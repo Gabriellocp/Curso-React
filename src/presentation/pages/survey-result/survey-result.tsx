@@ -30,8 +30,8 @@ const SurveyResult: React.FC<Props> = ({loadSurveyResult,saveSurveyResult}:Props
     const onAnswer = (answer:string): void => {
         setState(old=>({...old, isLoading:true}))
         saveSurveyResult.save({answer})
-            .then(surveyResult=> setState(old=>({...old,isLoading:false,surveyResult})))
-            .catch(handleError)
+        .then(surveyResult => setState(old => ({ ...old, isLoading: false, surveyResult })))
+        .catch(handleError)
     }
     return (
         <div className={Styles.surveyResultWrap}>

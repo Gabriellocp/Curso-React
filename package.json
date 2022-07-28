@@ -21,7 +21,8 @@
   "author": "Gabriel Orlando Campista Petrucci",
   "license": "ISC",
   "devDependencies": {
-    "@babel/preset-env": "^7.16.11",
+    "@babel/core": "^7.18.9",
+    "@babel/preset-env": "^7.18.9",
     "@cypress/webpack-preprocessor": "^5.11.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.2",
@@ -33,6 +34,7 @@
     "@types/react-dom": "^17.0.11",
     "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/eslint-plugin": "^5.11.0",
+    "babel-jest": "^28.1.3",
     "clean-webpack-plugin": "^4.0.0",
     "coveralls": "^3.1.1",
     "cross-env": "^7.0.3",
