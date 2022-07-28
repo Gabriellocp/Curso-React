@@ -24,14 +24,14 @@ const SurveyResult: React.FC<Props> = ({loadSurveyResult,saveSurveyResult}:Props
 
     },[state.reload])
     const handleError = useErrorHandler(
-        (error: Error) => setState(old=>({...old, surveyResult: null, error:error.message}))
+        (error: Error) => setState(old=>({...old, surveyResult: null, error:error.message, isLoading:false}))
     )
     const reload = (): void => setState(old=>({ isLoading: false, error: '', surveyResult: null as LoadSurveyResult.Model, reload: !old.reload}))
     const onAnswer = (answer:string): void => {
         setState(old=>({...old, isLoading:true}))
         saveSurveyResult.save({answer})
             .then()
-            .catch()
+            .catch(handleError)
     }
     return (
         <div className={Styles.surveyResultWrap}>
