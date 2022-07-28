@@ -111,4 +111,11 @@ describe('SurveyResult Component', ()=> {
         fireEvent.click(screen.getByTestId('backbutton'))
         expect(history.location.pathname).toBe('/')
     })
+    test('Should do nothing if answer clicked is already selected', async ()=>{
+        makeSut()
+        await waitFor(()=> screen.getByTestId('survey-result')) 
+        const answersWrap = screen.queryAllByTestId('answer-wrap')
+        fireEvent.click(answersWrap[0])
+        expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
+    })
 })
