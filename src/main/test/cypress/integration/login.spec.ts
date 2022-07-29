@@ -5,9 +5,9 @@ import * as Helpers from '../utils/helpers'
 const minPassLength: number = 5
 
 const path = /login/
-const mockInvalidCredentialsError = (): void => Http.mockUnauthorizedError(path)
-const mockUnexpectedError = (): void => Http.mockServerError(path)
-const mockSuccess = (): void =>  Http.mockOk(path,'account')
+const mockInvalidCredentialsError = (): void => Http.mockUnauthorizedError(path, 'GET')
+const mockUnexpectedError = (): void => Http.mockServerError(path, 'GET')
+const mockSuccess = (): void =>  Http.mockOk(path,'account', 'GET')
 const simulateValidSubmit = (): void => {
     cy.getByTestId('email').focus().type(faker.internet.email())
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))

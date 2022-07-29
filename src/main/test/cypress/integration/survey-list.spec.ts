@@ -2,9 +2,9 @@ import faker from 'faker'
 import * as Http from '../utils/http-mocks'
 import * as Helpers from '../utils/helpers'
 const path = /surveys/
-const mockUnexpectedError = (): void => Http.mockServerError(path)
-const mockAccessDeniedError = (): void => Http.mockForbiddenError(path)
-const mockSuccess = (): void => Http.mockOk(path,'survey-list')
+const mockUnexpectedError = (): void => Http.mockServerError(path, 'GET')
+const mockAccessDeniedError = (): void => Http.mockForbiddenError(path, 'GET')
+const mockSuccess = (): void => Http.mockOk(path,'survey-list', 'GET')
 describe('SurveyList', () => {
     beforeEach(() => {
         cy.fixture('account').then(account=>{

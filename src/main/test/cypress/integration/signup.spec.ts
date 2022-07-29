@@ -6,9 +6,9 @@ import faker from 'faker'
 const minPassLength: number = 5
 const minNameLength: number = 2
 const path = /signup/
-const mockEmailInUseError = (): void => Http.mockForbiddenError(path)
-const mockUnexpectedError = (): void => Http.mockServerError(path)
-const mockSuccess = (): void => Http.mockOk(path, 'account')
+const mockEmailInUseError = (): void => Http.mockForbiddenError(path, 'GET')
+const mockUnexpectedError = (): void => Http.mockServerError(path, 'GET')
+const mockSuccess = (): void => Http.mockOk(path, 'account', 'GET')
 
 const simulateValidSubmit = (): void => {
     const password = faker.random.alphaNumeric(5)
