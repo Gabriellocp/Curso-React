@@ -1,7 +1,7 @@
 import { LoadSurveyList } from "@/domain/usecases/load-survey-list"
 import { ErrorItem, Footer, Header } from "@/presentation/components"
 import { useErrorHandler } from "@/presentation/hooks"
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { useRecoilState } from "recoil"
 import {ListItem, surveyListState } from "./components"
 import Styles from './survey-list-styles.scss'
