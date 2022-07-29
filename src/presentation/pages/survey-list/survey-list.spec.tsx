@@ -7,6 +7,7 @@ import { AccessDeniedError, UnexpectedError } from "@/domain/errors"
 import { ApiContext } from "@/presentation/contexts"
 import { Router } from "react-router-dom"
 import { AccountModel } from "@/domain/models"
+import { RecoilRoot } from "recoil"
 
 const surveyElements: number = 2
 
@@ -21,11 +22,13 @@ const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy(surveyElements)): Sut
     const history = createMemoryHistory({ initialEntries: ['/'] })
     const setCurrentAccountMock = jest.fn()
     render(
-        <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock, getCurrentAccount: () => mockAccountModel() }}>
-            <Router history={history}>
-                <SurveyList loadSurveyList={loadSurveyListSpy}></SurveyList>
-            </Router>
-        </ApiContext.Provider>
+        <RecoilRoot>
+            <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock, getCurrentAccount: () => mockAccountModel() }}>
+                <Router history={history}>
+                    <SurveyList loadSurveyList={loadSurveyListSpy}></SurveyList>
+                </Router>
+            </ApiContext.Provider>
+        </RecoilRoot>
     )
     return {
         loadSurveyListSpy,
