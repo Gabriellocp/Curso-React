@@ -8,6 +8,7 @@ import { EmailInUseError } from '@/domain/errors'
 import { Router } from 'react-router-dom'
 import { ApiContext } from '@/presentation/contexts'
 import { AddAccount } from '@/domain/usecases'
+import { RecoilRoot } from 'recoil'
 type SutTypes = {
     addAccountSpy: AddAccountSpy
     setCurrentAccountMock: (account: AddAccount.Model) => void
@@ -25,11 +26,13 @@ const makeSut = (params?: SutParams): SutTypes => {
     validationSpy.errorMessage = params?.validationError
 
     render(
-        <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
-            <Router history={history} >
-                <Signup validation={validationSpy} addAccount={addAccountSpy} />
-            </Router>
-        </ApiContext.Provider>
+        <RecoilRoot>
+            <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
+                <Router history={history} >
+                    <Signup validation={validationSpy} addAccount={addAccountSpy} />
+                </Router>
+            </ApiContext.Provider>
+        </RecoilRoot>
     )
     return {
         addAccountSpy,

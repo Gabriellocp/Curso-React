@@ -1,8 +1,10 @@
-import React, { useContext, useRef } from "react"
+import React, { useRef } from "react"
 import Styles from "./input-styles.scss"
-import Context from '@/presentation/contexts/form/form-context'
-type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
-const Input: React.FC<Props> = (props: Props) => {
+type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
+    state: any
+    setState: any
+}
+const Input: React.FC<Props> = ({state, setState, ...props}: Props) => {
     const enableInput = (event: React.FocusEvent<HTMLInputElement>): void => {
         event.target.readOnly = false
     }
@@ -15,7 +17,6 @@ const Input: React.FC<Props> = (props: Props) => {
             
         )
     }
-    const { state, setState } = useContext(Context)
     const error = state[`${props.name}Error`]
     // const getStatus = (): string => {
     //     return error ? '😭' : '😎'

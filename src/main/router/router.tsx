@@ -7,6 +7,7 @@ import { getCurrentAccountAdapter, setCurrentAccountAdapter } from "../adapters/
 import { PrivateRoute } from "@/presentation/components"
 import { makeSurveyList } from "../factories/pages/survey-list/survey-list-factory"
 import { makeSurveyResult } from "../factories/pages/survey-result/survey-result-factory"
+import {RecoilRoot} from 'recoil'
 // type Factory = {
 //     makeLogin: React.FC
 //     makeSignup: React.FC
@@ -15,23 +16,25 @@ import { makeSurveyResult } from "../factories/pages/survey-result/survey-result
 
 const Router: React.FC = () => {
     return (
-        <ApiContext.Provider
-            value={{
-                setCurrentAccount: setCurrentAccountAdapter,
-                getCurrentAccount: getCurrentAccountAdapter
+        <RecoilRoot>
+            <ApiContext.Provider
+                value={{
+                    setCurrentAccount: setCurrentAccountAdapter,
+                    getCurrentAccount: getCurrentAccountAdapter
 
-            }}>
-            <BrowserRouter>
-                <Switch>
-                    <Route path='/login' exact component={makeLogin} />
-                    <Route path='/signup' exact component={makeSignUp} />
-                    <PrivateRoute path='/' exact component={makeSurveyList} />
-                    <PrivateRoute path='/surveys/:id' exact component={makeSurveyResult} />
-                    
-                </Switch>
+                }}>
+                <BrowserRouter>
+                    <Switch>
+                        <Route path='/login' exact component={makeLogin} />
+                        <Route path='/signup' exact component={makeSignUp} />
+                        <PrivateRoute path='/' exact component={makeSurveyList} />
+                        <PrivateRoute path='/surveys/:id' exact component={makeSurveyResult} />
+                        
+                    </Switch>
 
-            </BrowserRouter>
-        </ApiContext.Provider>
+                </BrowserRouter>
+            </ApiContext.Provider>
+        </RecoilRoot>
     )
 }
 

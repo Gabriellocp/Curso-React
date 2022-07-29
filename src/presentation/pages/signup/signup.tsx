@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Styles from './signup-styles.scss'
-import { Footer, Input, LoginHeader, FormStatus } from '@/presentation/components'
-import Context from '@/presentation/contexts/form/form-context'
+import { Footer, LoginHeader } from '@/presentation/components'
 import { Validation } from '@/presentation/protocols/validation'
 import { AddAccount } from '@/domain/usecases'
 import { Link, useHistory } from 'react-router-dom'
-import SubmitButton from '@/presentation/components/submit-button/submit-button'
 import { ApiContext } from '@/presentation/contexts'
+import { useRecoilState } from 'recoil'
+import { Input, signupState, SubmitButton, FormStatus } from './components'
 type Props = {
     validation: Validation
     addAccount: AddAccount
@@ -15,19 +15,7 @@ type Props = {
 const Signup: React.FC<Props> = ({ validation, addAccount }) => {
     const { setCurrentAccount } = useContext(ApiContext)
     const history = useHistory()
-    const [state, setState] = useState({
-        isLoading: false,
-        isFormInvalid: true,
-        mainError: '',
-        name: '',
-        email: '',
-        password: '',
-        passwordConfirmation: '',
-        emailError: '',
-        passwordError: '',
-        passwordConfirmationError: '',
-        nameError: ''
-    })
+    const [state, setState] = useRecoilState(signupState)
 
     // useEffect(() => {
     //     const { name, email, password, passwordConfirmation } = state
@@ -86,7 +74,6 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
         <div className={Styles.signup}>
             <LoginHeader></LoginHeader>
 
-            <Context.Provider value={{ state, setState }}>
                 <form data-testid='form' className={Styles.form} onSubmit={handleSubmit}>
                     <h2> Signup </h2>
                     <Input type="text" name="name" placeholder='Digite seu nome'></Input>
@@ -97,7 +84,6 @@ const Signup: React.FC<Props> = ({ validation, addAccount }) => {
                     <Link data-testid="login" replace to="/login" className={Styles.link}>Voltar para Login</Link>
                     <FormStatus ></FormStatus>
                 </form>
-            </Context.Provider>
 
             <Footer />
         </div>

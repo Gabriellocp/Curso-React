@@ -9,6 +9,7 @@ import faker from 'faker'
 import { InvalidCredentialsError } from '@/domain/errors'
 import { ApiContext } from '@/presentation/contexts'
 import { Authentication } from '@/domain/usecases'
+import { RecoilRoot } from 'recoil'
 type SutTypes = {
     validationSpy: ValidationSpy
     authenticationSpy: AuthenticationSpy
@@ -26,14 +27,16 @@ const makeSut = (params?: SutParams): SutTypes => {
     const setCurrentAccountMock = jest.fn()
     validationSpy.errorMessage = params?.validationError
     render(
-        <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
-            <Router history={history}>
-                <Login
-                    validation={validationSpy}
-                    authentication={authenticationSpy}
-                ></Login>
-            </Router>
-        </ApiContext.Provider>
+        <RecoilRoot>
+            <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
+                <Router history={history}>
+                    <Login
+                        validation={validationSpy}
+                        authentication={authenticationSpy}
+                    ></Login>
+                </Router>
+            </ApiContext.Provider>
+        </RecoilRoot>
     )
     return {
         validationSpy,
