@@ -1,7 +1,8 @@
 import * as Http from '../utils/http-mocks'
 import * as Helpers from '../utils/helpers'
 const path = /surveys/
-const mockSuccess = () : void => Http.mockOk(path, 'survey-result', 'GET')
+
+const mockLoadSuccess = () : void => Http.mockOk(path, 'load-survey-result', 'GET')
 
 describe('SurveyResult', () => {
     describe('Load',()=>{
@@ -21,7 +22,7 @@ describe('SurveyResult', () => {
             cy.visit('/surveys/any_id')
             mockLoadUnexpectedError()
             cy.getByTestId('error').should('contain.text','Aconteceu algo inesperado...')
-            mockSuccess()
+            mockLoadSuccess()
             cy.getByTestId('reload').click()
             cy.getByTestId('question').should('exist')
         })
@@ -32,7 +33,7 @@ describe('SurveyResult', () => {
         })
         it('Should present SurveyResult', () => {
             cy.visit('/surveys/any_id')
-            mockSuccess()
+            mockLoadSuccess()
             cy.getByTestId('question').should('have.text', ' Question 1 ')
             cy.getByTestId('day').should('have.text','03')
             cy.getByTestId('month').should('have.text','fev')
@@ -54,7 +55,7 @@ describe('SurveyResult', () => {
             // cy.visit('/').then(()=>cy.visit('/surveys/any_id'))
             cy.visit('/')
             cy.visit('/surveys/any_id')
-            mockSuccess()
+            mockLoadSuccess()
             cy.getByTestId('backbutton').click()
             Helpers.testUrl('/')
         })
@@ -62,12 +63,14 @@ describe('SurveyResult', () => {
     describe('Save',()=>{
         const mockSaveUnexpectedError = (): void => Http.mockServerError(path, 'PUT')
         const mockSaveAccessDeniedError = ():void => Http.mockForbiddenError(path, 'PUT')
+        const mockSaveSuccess = () : void => Http.mockOk(path, 'save-survey-result', 'GET')
+
         beforeEach(() => {
             cy.fixture('account').then(account=>{
                 Helpers.setLocalStorageItem('account',account)
             })
             cy.visit('/surveys/any_id')
-            mockSuccess()
+            mockLoadSuccess()
         })
         it('Should present error on UnexpectedError',()=>{
             mockSaveUnexpectedError()
@@ -78,6 +81,26 @@ describe('SurveyResult', () => {
             mockSaveAccessDeniedError()
             cy.get('li:nth-child(2)').click()
             Helpers.testUrl('/login')
+        })
+        it('Should present SurveyResult', () => {
+            mockSaveSuccess()
+            cy.get('li:nth-child(2)').click()
+            cy.getByTestId('question').should('have.text', ' Other Question ')
+            cy.getByTestId('day').should('have.text','23')
+            cy.getByTestId('month').should('have.text','mar')
+            cy.getByTestId('year').should('have.text','2020')
+            cy.get('li:nth-child(1)').then(li => {
+                assert.equal(li.find('[data-testid="answer"]').text(),'other_answer')
+                assert.equal(li.find('[data-testid="image"]').attr('src'),'other_image')
+                assert.equal(li.find('[data-testid="percent"]').text(),'50%')
+                }    
+            )
+            cy.get('li:nth-child(2)').then(li => {
+                assert.equal(li.find('[data-testid="answer"]').text(),'other_answer_2')
+                assert.notExists(li.find('[data-testid="image"]'))
+                assert.equal(li.find('[data-testid="percent"]').text(),'50%')
+                }    
+            )
         })
     })
     
