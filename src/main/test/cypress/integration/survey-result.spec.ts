@@ -74,6 +74,11 @@ describe('SurveyResult', () => {
             cy.get('li:nth-child(2)').click()
             cy.getByTestId('error').should('contain.text','Aconteceu algo inesperado...')
         })
+        it('Should present error on UnexpectedError',()=>{
+            mockSaveAccessDeniedError()
+            cy.get('li:nth-child(2)').click()
+            Helpers.testUrl('/login')
+        })
     })
     
 })
