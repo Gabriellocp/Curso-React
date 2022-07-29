@@ -6,9 +6,9 @@ import faker from 'faker'
 const minPassLength: number = 5
 const minNameLength: number = 2
 const path = /signup/
-const mockEmailInUseError = (): void => Http.mockForbiddenError(path, 'GET')
-const mockUnexpectedError = (): void => Http.mockServerError(path, 'GET')
-const mockSuccess = (): void => Http.mockOk(path, 'account', 'GET')
+const mockEmailInUseError = (): void => Http.mockForbiddenError(path, 'POST')
+const mockUnexpectedError = (): void => Http.mockServerError(path, 'POST')
+const mockSuccess = (): void => Http.mockOk(path, 'account', 'POST')
 
 const simulateValidSubmit = (): void => {
     const password = faker.random.alphaNumeric(5)
@@ -91,8 +91,8 @@ describe('Signup', () => {
         cy.getByTestId('password').focus().type(password)
         cy.getByTestId('passwordConfirmation').focus().type(password)
         cy.getByTestId('submit').dblclick()
-        Helpers.testUrl('/')
         cy.wait('@request')
+        Helpers.testUrl('/')
         Helpers.testHttpCallsCount(1)
     })
     it('Should prevent invalid form on submit', () => {
