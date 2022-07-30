@@ -5,9 +5,9 @@ import * as Helpers from '../utils/helpers'
 const minPassLength: number = 5
 
 const path = /login/
-const mockInvalidCredentialsError = (): void => Http.mockUnauthorizedError(path, 'GET')
-const mockUnexpectedError = (): void => Http.mockServerError(path, 'GET')
-const mockSuccess = (): void =>  Http.mockOk(path,'account', 'GET')
+const mockInvalidCredentialsError = (): void => Http.mockUnauthorizedError(path, 'POST')
+const mockUnexpectedError = (): void => Http.mockServerError(path, 'POST')
+const mockSuccess = (): void =>  Http.mockOk(path,'account', 'POST')
 const simulateValidSubmit = (): void => {
     cy.getByTestId('email').focus().type(faker.internet.email())
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
@@ -26,6 +26,15 @@ describe('Login', () => {
         FormHelper.helperInputStatus('password', 'Campo obrigatório')
         cy.getByTestId('submit').should('have.attr', 'disabled')
         cy.getByTestId('error-wrap').should('not.have.descendants')
+    })
+    it('Should reset state on page load', () => {
+        cy.getByTestId('email').focus().type(faker.internet.email())
+        FormHelper.helperInputStatus('email')
+        cy.getByTestId('register').click()
+        cy.getByTestId('login').click()
+        FormHelper.helperInputStatus('email', 'Campo obrigatório')
+
+
     })
     it('Should present error state if form is invalid', () => {
         cy.getByTestId('email').focus().type(faker.random.word())
