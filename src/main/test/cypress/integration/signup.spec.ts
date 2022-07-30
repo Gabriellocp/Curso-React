@@ -38,6 +38,15 @@ describe('Signup', () => {
         cy.getByTestId('submit').should('have.attr', 'disabled')
         cy.getByTestId('error-wrap').should('not.have.descendants')
     })
+    it('Should reset state on page load', () => {
+        cy.getByTestId('email').focus().type(faker.internet.email())
+        FormHelper.helperInputStatus('email')
+        cy.getByTestId('login').click()
+        cy.getByTestId('register').click()
+        FormHelper.helperInputStatus('email', 'Campo obrigatório')
+
+
+    })
     it('Should present error state if form is invalid', () => {
         cy.getByTestId('name').focus().type(faker.random.alphaNumeric(1))
         FormHelper.helperInputStatus('name', `Campo deve ter ${minNameLength} caracteres`)
