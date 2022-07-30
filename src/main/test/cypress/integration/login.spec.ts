@@ -27,6 +27,15 @@ describe('Login', () => {
         cy.getByTestId('submit').should('have.attr', 'disabled')
         cy.getByTestId('error-wrap').should('not.have.descendants')
     })
+    it('Should reset state on page load', () => {
+        cy.getByTestId('email').focus().type(faker.internet.email())
+        FormHelper.helperInputStatus('email')
+        cy.getByTestId('register').click()
+        cy.getByTestId('login').click()
+        FormHelper.helperInputStatus('email', 'Campo obrigatório')
+
+
+    })
     it('Should present error state if form is invalid', () => {
         cy.getByTestId('email').focus().type(faker.random.word())
         FormHelper.helperInputStatus('email', 'email inválido')
